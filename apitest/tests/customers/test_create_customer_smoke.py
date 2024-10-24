@@ -24,4 +24,4 @@ def test_create_customer_only_email_password():
     # Verify email in the response
     
     # Verify customer is created in database
-    9209402916
+    
