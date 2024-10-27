@@ -13,5 +13,6 @@ class CustomerHelper(object):
             password = 'Password1'
             
         payload = dict()
+        
         payload['email'] = email
         payload['password'] = password
