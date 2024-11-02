@@ -12,3 +12,4 @@ wcapi = API(
 
 r = wcapi.get("products")
 pprint(r.json())
+
