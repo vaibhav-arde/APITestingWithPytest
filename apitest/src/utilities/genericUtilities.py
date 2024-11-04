@@ -4,7 +4,7 @@ import random
 import string
 
 def generate_random_email_and_password(domain=None, email_prefix=None):
-    logger.debug("Genarating randoam email and password.")
+    logger.debug("Genarating random email and password.")
     
     if not domain:
         doamin = "vtest.com"
