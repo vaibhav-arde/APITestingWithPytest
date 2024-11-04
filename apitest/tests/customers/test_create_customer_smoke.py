@@ -20,11 +20,13 @@ def test_create_customer_only_email_password():
     cust_obj = CustomerHelper()
     cust_api_info = cust_obj.create_customer(email=email, password=password )
     
+    # Verify email in the response
+    assert cust_api_info['email'] == email, f"Create Customer api returned wrong email. Email should be : {email}"
+    assert cust_api_info['first_name'] == '', f"Create Customer api returned wrong first_name. First name should be : ''"
+    
     import pdb; pdb.set_trace()
     
-    # verify status code of the call
-    
-    # Verify email in the response
+   
     
     # Verify customer is created in database
     

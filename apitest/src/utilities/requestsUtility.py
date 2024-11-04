@@ -5,6 +5,7 @@ import requests
 import os
 import json
 from requests_oauthlib import OAuth1
+import logging as logger
 
 
 class RequestUtility(object):
@@ -17,18 +18,28 @@ class RequestUtility(object):
         # self.auth = OAuth1("", "")
         self.auth = OAuth1(wc_creds['wc_key'], wc_creds['wc_secret'])
     
+    def assert_status_code(self):
+        assert self.res_status_code == self.expected_status_code, f"Bad status code" \
+            f"Expected status code {self.expected_status_code} but actual {self.status_code}," \
+                f"URL: {self.url}, Response Json: {self.res_json}"
+        
     def post(self, endpoint, payload=None, headers=None, expected_status_code =200):
         if not headers:
             headers = {"Content-Type": "application/json"}
             
-        url = self.base_url + endpoint
+        self.url = self.base_url + endpoint
+        
+        # import pdb; pdb.set_trace()
+        res_api = requests.post(url=self.url, data=json.dumps(payload), headers=headers, auth=self.auth)
+        
+        self.res_status_code = res_api.status_code
+        self.expected_status_code = expected_status_code
+        self.res_json = res_api.json()
         
         import pdb; pdb.set_trace()
-        res_api = requests.post(url=url, data=json.dumps(payload), headers=headers, auth=self.auth)
+        self.assert_status_code()
         
-        self.status_code = res_api.status_code
-        assert self.status_code == int(expected_status_code), f'Expected status code {expected_status_code} but actual {self.status_code}'
-        import pdb; pdb.set_trace()
+        logger.debug(f"API Response : {self.res_json}")
         return res_api.json()
         
     def get(self):
