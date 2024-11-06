@@ -7,11 +7,13 @@ class DBUtility(object):
     def __init__(self):
         self.creds = CredentialsUtility.get_db_credentials()
         self.host = 'localhost'
-        self.socket = ".../mysql.sock"
+        self.socket = "/Users/vaibhavarde/Library/Application Support/Local/run/PvtyQB0Kk/mysql/mysqld.sock"
     
     def create_connection(self):
         # connection = pymysql.connect(host=self.host, user=self.creds['db_user'], password=self.creds['db_password'], port=3306)
-        connection = pymysql.connect(host=self.host, user=self.creds['db_user'], password=self.creds['db_password'], port=3306, unix_socket=self.socket)
+        connection = pymysql.connect(host=self.host, user=self.creds['db_user'], 
+                                     password=self.creds['db_password'],
+                                     unix_socket=self.socket)
         
         return connection
     
