@@ -1,5 +1,6 @@
 import pymysql
 import pymysql.cursors
+import logging as logger
 from apitest.src.utilities.credentialsUtility import CredentialsUtility
 
 class DBUtility(object):
@@ -21,6 +22,7 @@ class DBUtility(object):
         conn =  self.create_connection()
         
         try:
+            logger.debug(f"Executing : {sql}")
             cur = conn.cursor(pymysql.cursors.DictCursor)
             cur.execute(sql)
             rs_dict = cur.fetchall()
