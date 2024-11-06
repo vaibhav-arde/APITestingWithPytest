@@ -2,6 +2,7 @@ import pytest
 import logging as logger
 from apitest.src.utilities.genericUtilities import generate_random_email_and_password
 from apitest.src.helpers.customers_helper import CustomerHelper
+from apitest.src.dao.customers_dao import CustomersDAO
 
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
@@ -24,6 +25,9 @@ def test_create_customer_only_email_password():
     assert cust_api_info['email'] == email, f"Create Customer api returned wrong email. Email should be : {email}"
     assert cust_api_info['first_name'] == '', f"Create Customer api returned wrong first_name. First name should be : ''"
     
+    # Verify customer is created in database
+    cust_dao = CustomersDAO()
+    cust_info = cust_dao.get_customer_by_email(email)
     import pdb; pdb.set_trace()
     
    

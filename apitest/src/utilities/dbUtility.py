@@ -29,6 +29,8 @@ class DBUtility(object):
             raise Exception(f"Failed running sql: {sql} \n Error: {str(e)}")
         finally:
             conn.close()
+            
+        return rs_dict
     
     def execute_sql(self, sql):
         pass

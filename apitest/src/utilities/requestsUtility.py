@@ -36,7 +36,7 @@ class RequestUtility(object):
         self.expected_status_code = expected_status_code
         self.res_json = res_api.json()
         
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         self.assert_status_code()
         
         logger.debug(f"API Response : {self.res_json}")
