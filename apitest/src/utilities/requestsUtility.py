@@ -39,8 +39,22 @@ class RequestUtility(object):
         # import pdb; pdb.set_trace()
         self.assert_status_code()
         
-        logger.debug(f"API Response : {self.res_json}")
+        logger.debug(f"POST API Response : {self.res_json}")
         return res_api.json()
         
-    def get(self):
-        pass
+    def get(self, endpoint, payload=None, headers=None, expected_status_code =200):
+        if not headers:
+            headers = {"Content-Type": "application/json"}
+            
+        self.url = self.base_url + endpoint
+        
+        res_api = requests.get(url=self.url, data=json.dumps(payload), headers=headers, auth=self.auth)
+        self.res_status_code = res_api.status_code
+        self.expected_status_code = expected_status_code
+        self.res_json = res_api.json()
+        
+        # import pdb; pdb.set_trace()
+        self.assert_status_code()
+        
+        logger.debug(f"GET API Response : {self.res_json}")
+        return res_api.json()
