@@ -36,3 +36,7 @@ def test_create_customer_only_email_password():
     
     # import pdb; pdb.set_trace()
     
+
+@pytest.mark.tcid47
+def test_create_customer_fail_for_existing_email():
+    pass
