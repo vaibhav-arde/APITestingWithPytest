@@ -6,6 +6,7 @@ from apitest.src.dao.customers_dao import CustomersDAO
 from apitest.src.utilities.requestsUtility import RequestUtility
 
 
+@pytest.mark.customers
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
     logger.info("TEST: Create new customer with email and password only.")
@@ -38,7 +39,8 @@ def test_create_customer_only_email_password():
     
     # import pdb; pdb.set_trace()
     
-
+    
+@pytest.mark.customers
 @pytest.mark.tcid47
 def test_create_customer_fail_for_existing_email():
     
@@ -55,4 +57,4 @@ def test_create_customer_fail_for_existing_email():
     
     assert 'An account is already registered with your email address.' in cust_api_info['message'], f"Create customer with "\
         f"Existing user error 'code' is not correct. Expected: 'An account is already registered with your email address.', Actual:{cust_api_info['message']}"
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
