@@ -3,6 +3,8 @@ import logging as logger
 from apitest.src.utilities.genericUtilities import generate_random_email_and_password
 from apitest.src.helpers.customers_helper import CustomerHelper
 from apitest.src.dao.customers_dao import CustomersDAO
+from apitest.src.utilities.requestsUtility import RequestUtility
+
 
 @pytest.mark.tcid29
 def test_create_customer_only_email_password():
@@ -39,4 +41,18 @@ def test_create_customer_only_email_password():
 
 @pytest.mark.tcid47
 def test_create_customer_fail_for_existing_email():
-    pass
+    
+    # Get existing email from DB
+    cust_dao = CustomersDAO()
+    existing_cust = cust_dao.get_random_customer_from_db()
+    existing_email = existing_cust[0]['user_email']
+    
+    req_utility = RequestUtility()
+    payload = {"email": existing_email, "password": "Password1"}
+    cust_api_info = req_utility.post(endpoint='customers', payload=payload, expected_status_code=400)
+    assert cust_api_info['code'] == 'registration-error-email-exists', f"Create customer with "\
+        f"Existing user error 'code' is not correct. Expected: 'registration-error-email-exists', Actual:{cust_api_info['code']}"
+    
+    assert 'An account is already registered with your email address.' in cust_api_info['message'], f"Create customer with "\
+        f"Existing user error 'code' is not correct. Expected: 'An account is already registered with your email address.', Actual:{cust_api_info['message']}"
+    import pdb; pdb.set_trace()
